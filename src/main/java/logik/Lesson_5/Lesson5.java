@@ -1,7 +1,6 @@
-package logik.lesson5;
+package logik.Lesson_5;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Lesson5 {
     private static final int SIZE = 10000000;
@@ -13,16 +12,16 @@ public class Lesson5 {
         long time = System.currentTimeMillis();
         recalculation(arr);
         System.out.println("Время перерасчета массива составило: " + (System.currentTimeMillis()-time) + " mc");
-//        System.out.println(Arrays.toString(arr));
 
 
-        for (int i = 2; i <= 100; i++) {
+
+        for (int i = 2; i <= 10; i++) {
             System.out.println("Потоков " + i);
             fillinger();
             time = System.currentTimeMillis();
             recalculation(arr, i);
             System.out.println("Время перерасчета массива составило: " + (System.currentTimeMillis()-time) + " mc");
-//        System.out.println(Arrays.toString(arr));
+
 
 //            !!! Вопрос: почему при 5-6 потоках, в польшинстве случаях,
 //             получается самое большое время работы? не беря во внимание 2 потока
@@ -49,15 +48,17 @@ public class Lesson5 {
                 System.arraycopy(array, countInArray*(i-1), arrays.get(i-1), 0, countInLastArray);
             }
         }
-        ArrayList<Thread> threads = new ArrayList<Thread>();
+
+        Thread[] threads = new Thread[flow];
         for (int i = 0; i < flow; i++) {
-            threads.add(new Thread(new MyThread(arrays.get(i))));
-            threads.get(i).start();
+
+            threads[i] = new Thread(new MyThread(arrays.get(i)));
+            threads[i].start();
         }
 
         for (int i = 0; i < flow; i++) {
             try {
-                threads.get(i).join();
+                threads[i].join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -98,7 +99,7 @@ public class Lesson5 {
             recalculation();
         }
 
-        private synchronized float[] recalculation() {
+        private float[] recalculation() {
             for (int i = 0; i < arrayInThread.length; i++) {
                 arrayInThread[i] = (float)(arrayInThread[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
             }

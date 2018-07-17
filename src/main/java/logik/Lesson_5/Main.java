@@ -1,6 +1,4 @@
-package logik;
-
-import logik.lesson5.Lesson5;
+package logik.Lesson_5;
 
 public class Main {
 
