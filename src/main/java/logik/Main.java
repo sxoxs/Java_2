@@ -1,8 +1,9 @@
-package logik.Lesson_5;
+package logik;
+
 
 public class Main {
 
     public static void main(String[] args) {
-        new Lesson5().go();
+
     }
 }
